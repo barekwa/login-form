@@ -10,10 +10,12 @@
 <body>
     <form action="login.php" method="POST">
         <label for="login">Login: </label><input type="text" name="login" required><br>
-        <label for="password">Hasło: </label><input type="password" name="password" required><br>
+        <label for="password">Hasło: </label><input type="text" name="password" required><br>
         <button type="submit">Wyślij</button><br>
     </form>
-            <p>Nie masz konta?</p>
-            <a href="new-account.html">Załóż konto</a>
+    <form action="new-account.php" method="post">
+            <label for="addUser">Nie masz konta?</label>
+            <button type="submit">Załóż konto</button>
+    </form>
 </body>
 </html>

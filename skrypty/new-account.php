@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="login">Login: </label><input type="text" name="login" required class="login"><br>
+        <label for="password">Hasło: </label><input type="text" name="password" required  class="pass"><br>
+        <label for="password-repeat">Powtórz hasło: </label><input type="text" name="password-repeat" required class="pass-repeat"><br>
+        <button type="submit" name="button">Prześlij</button>
+    </form>
+    <script src="validation.js"></script>
+</body>
+</html>

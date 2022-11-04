@@ -3,7 +3,8 @@ const pass = document.querySelector(".pass");
 const passRepeat = document.querySelector(".pass-repeat");
 const numReg = /[0-9]/g;
 const specialCharReg = /[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\[\]\:\;\'\"\|\~\`\_\-]/g;
-let validation = () => {
+const form = document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault();
     if(pass.value!==passRepeat.value){
         alert("Hasła muszą być identyczne");
         return false;
@@ -21,25 +22,35 @@ let validation = () => {
         return false;
     }
     else{
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onload = () => {
-            if(xmlhttp.status === 200){
-                if(xmlhttp.responseText=="err")
-                    alert("Podana nazwa uzytkownika jest zajeta");
-                else{
-                    alert("Utworzono konto");
-                }
+        const login = log.value;
+        const password = pass.value;
+        const url = "http://localhost/skrypty/addAccount.php";
+        const data = {login: login, password: password};
+        fetch(url,{
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              },
+            body: JSON.stringify(data)
+        }).then(Response => {
+            if(Response.status===200){
+                Response.json().then(data => {
+                    if(data["succes"]==="true"){
+                        alert("Utworzono konto");
+                        setTimeout(() => {
+                            window.location.href = "index.php";
+                        },3000)
+                    }
+                    else if(data["succes"]==="false")
+                        alert("Podana nazwa uzytkownika jest zajeta");
+                })
             }
-            if(xmlhttp.status === 404){
-                alert("Błąd połaczenia z bazą")
+            else{
+                throw Error;
             }
-        }
-        xmlhttp.open("POST","addUser.php",true);
-        xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xmlhttp.send(`login=${log.value}&password=${pass.value}`);
+        }).catch(err => {
+            alert("Błąd połączenia z bazą");
+            console.log(err);
+        })
     }
-}
-document.querySelector("button").addEventListener("click", validation);
-
-
-
+});
